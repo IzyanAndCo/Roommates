@@ -15,7 +15,7 @@ def get_users():
     """
     API endpoint for getting a list of users
 
-    GET /users?page=<page_number>&per_page=<per_page_number>
+    GET /api/users?page=<page_number>&per_page=<per_page_number>
 
     Query Params:
     1. page (int): (Optional, default = 1) The page number of the user list.
@@ -55,7 +55,7 @@ def create_user():
     """
     API endpoint for creating a new user
 
-    POST /users
+    POST /api/users
 
     Request Body Parameters:
     1. username (str): The username of the new user. Should be unique

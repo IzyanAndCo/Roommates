@@ -11,15 +11,30 @@ class User(db.Model):
     password = db.Column(db.String(256), nullable=False)
     guests = db.relationship('Guest', backref='inviter', lazy=True)
 
-    def set_password(self, password):
-        """Hashes the password using bcrypt before storing in database."""
+    def set_password(self, password: str) -> None:
+        """
+        Hashes the password using bcrypt before storing in database.
+        :param password: Password to set
+        :type password: str
+        """
         self.password = bcrypt.hashpw(password.encode('utf-8'), bcrypt.gensalt())
 
-    def check_password(self, password):
-        """Checks whether the provided password matches the stored hashed password."""
+    def check_password(self, password: str) -> bool:
+        """
+        Checks whether the provided password matches the stored hashed password.
+        :param password: Password to check
+        :type password: str
+        :return: Result of password check
+        :rtype: bool
+        """
         return bcrypt.checkpw(password.encode('utf-8'), self.password)
 
-    def to_dict(self):
+    def to_dict(self) -> dict:
+        """
+        Convert table data to dictionary
+        :return: Dict with table data
+        :rtype: dict
+        """
         return {
             'id': self.id,
             'username': self.username,
@@ -32,7 +47,12 @@ class GuestType(db.Model):
     name = db.Column(db.String(50), nullable=False)
     __table_args__ = (UniqueConstraint('name', name='uq_name'),)
 
-    def to_dict(self):
+    def to_dict(self) -> dict:
+        """
+            Convert table data to dictionary
+            :return: Dict with table data
+            :rtype: dict
+        """
         return {
             'id': self.id,
             'name': self.name
@@ -50,6 +70,11 @@ class Guest(db.Model):
     comment = db.Column(db.String(255))
 
     def to_dict(self):
+        """
+            Convert table data to dictionary
+            :return: Dict with table data
+            :rtype: dict
+        """
         return {
             'id': self.id,
             'guest_type_id': self.guest_type_id,

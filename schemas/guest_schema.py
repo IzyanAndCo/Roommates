@@ -14,10 +14,22 @@ class GuestSchema(Schema):
 
     @validates_schema
     def validate_coming_date(self, data, **kwargs):
+        """
+        Validation for coming_date field
+
+        :param data: Data with fields
+        :param kwargs: Additional parameters
+        """
         if data['coming_date'] < datetime.today().date():
             raise ValidationError('Date cannot be in the past')
 
     @validates_schema
     def validate_coming_time(self, data, **kwargs):
+        """
+            Validation for coming_date field
+
+            :param data: Data with fields
+            :param kwargs: Additional parameters
+        """
         if data['coming_date'] == datetime.today().date() and data['coming_time'] == datetime.now().time():
             raise ValidationError('Time cannot be in the past')
