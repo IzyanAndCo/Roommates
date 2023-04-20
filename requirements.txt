@@ -1,0 +1,5 @@
+Flask~=2.2.3
+marshmallow~=3.19.0
+SQLAlchemy~=2.0.9
+alembic~=1.10.3
+Jinja2~=3.1.2

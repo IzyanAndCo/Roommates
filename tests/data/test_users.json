@@ -1,0 +1,155 @@
+{
+  "ValidUsers" : [
+    {
+      "username" : "User1",
+      "password" : "8U!l8Q3d",
+      "email" : "abc.def@mail.com"
+    },
+    {
+      "username" : "User_1",
+      "password" : "msS54&x7",
+      "email" : "abc-d@mail.com"
+    },
+    {
+      "username" : "User_2",
+      "password" : "30PM0b2$",
+      "email" : "abc.def@mail.co"
+    },
+    {
+      "username" : "___USER___",
+      "password" : "ukEh758@",
+      "email" : "abc@mail.com"
+    },
+    {
+      "username" : "123",
+      "password" : "&Y4ik%26",
+      "email" : "abc_def@mail.com"
+    },
+    {
+      "username" : "______",
+      "password" : "&Y4ik%26FFFFFFFFFFFFF@@@@@",
+      "email" : "abc.def@mail.cc"
+    },
+    {
+      "username" : "dotka",
+      "password" : "&Y4ik%26FFFFFFFFFFFFF@@@@@",
+      "email" : "abc.def@mail-archive.com"
+    },
+    {
+      "username" : "Natasha",
+      "password" : "&Y4ik%26FFFFFFFFFFFFF@@@@@",
+      "email" : "abc.def@mail.org"
+    }
+  ],
+  "InvalidPasswordUsers": [
+    {
+      "username" : "Natasha",
+      "password" : "&Y4ik%2",
+      "email" : "abc.def@mail.org"
+    },
+    {
+      "username" : "Natasha",
+      "password" : "YY4ikk26",
+      "email" : "abc.def@mail.org"
+    },
+    {
+      "username" : "Natasha",
+      "password" : "&Yaik%aa",
+      "email" : "abc.def@mail.org"
+    },
+    {
+      "username" : "Natasha",
+      "password" : "&a4ik%26",
+      "email" : "abc.def@mail.org"
+    },
+    {
+      "username" : "Natasha",
+      "password" : "&Y444%26",
+      "email" : "abc.def@mail.org"
+    },
+    {
+      "username" : "Natasha",
+      "password" : "",
+      "email" : "abc.def@mail.org"
+    }
+  ],
+  "InvalidUsernameUsers": [
+    {
+      "username" : "In\uD835\uDCCBaliᖙ☯",
+      "password" : "&Y4ik%26FFFFFFFFFFFFF@@@@@",
+      "email" : "abc.def@mail.org"
+    },
+    {
+      "username" : "1nv@lid",
+      "password" : "&Y4ik%26FFFFFFFFFFFFF@@@@@",
+      "email" : "abc.def@mail.org"
+    },
+    {
+      "username" : "King K I M O",
+      "password" : "&Y4ik%26FFFFFFFFFFFFF@@@@@",
+      "email" : "abc.def@mail.org"
+    },
+    {
+      "username" : "༄ᶦᶰᵈ᭄Aི࿐ALOK\uD83E\uDD7A",
+      "password" : "&Y4ik%26FFFFFFFFFFFFF@@@@@",
+      "email" : "abc.def@mail.org"
+    },
+    {
+      "username" : "ཇབㅤསཇﾒ†ꪶ℣ㅤ❻❻",
+      "password" : "&Y4ik%26FFFFFFFFFFFFF@@@@@",
+      "email" : "abc.def@mail.org"
+    },
+    {
+      "username" : "",
+      "password" : "&Y4ik%26FFFFFFFFFFFFF@@@@@",
+      "email" : "abc.def@mail.org"
+    }
+  ],
+  "InvalidEmailUsers" : [
+    {
+      "username" : "Natasha",
+      "password" : "&Y4ik%26FFFFFFFFFFFFF@@@@@",
+      "email" : "abc-@mail.com"
+    },
+    {
+      "username" : "Natasha",
+      "password" : "&Y4ik%26FFFFFFFFFFFFF@@@@@",
+      "email" : "abc..def@mail.com"
+    },
+    {
+      "username" : "Natasha",
+      "password" : "&Y4ik%26FFFFFFFFFFFFF@@@@@",
+      "email" : ".abc@mail.com"
+    },
+    {
+      "username" : "Natasha",
+      "password" : "&Y4ik%26FFFFFFFFFFFFF@@@@@",
+      "email" : "abc#def@mail.com"
+    },
+    {
+      "username" : "Natasha",
+      "password" : "&Y4ik%26FFFFFFFFFFFFF@@@@@",
+      "email" : "abc.def@mail.c"
+    },
+    {
+      "username" : "Natasha",
+      "password" : "&Y4ik%26FFFFFFFFFFFFF@@@@@",
+      "email" : "abc.def@mail#archive.com"
+    },
+    {
+      "username" : "Natasha",
+      "password" : "&Y4ik%26FFFFFFFFFFFFF@@@@@",
+      "email" : "abc.def@mail"
+    },
+    {
+      "username" : "Natasha",
+      "password" : "&Y4ik%26FFFFFFFFFFFFF@@@@@",
+      "email" : "abc.def@mail..com"
+    },
+    {
+      "username" : "Natasha",
+      "password" : "&Y4ik%26FFFFFFFFFFFFF@@@@@",
+      "email" : ""
+    }
+  ]
+}
