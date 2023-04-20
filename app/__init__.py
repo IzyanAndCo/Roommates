@@ -1,4 +1,5 @@
 from flask import Flask
+from flask_jwt_extended import JWTManager
 from flask_sqlalchemy import SQLAlchemy
 from flask_migrate import Migrate
 from jinja2.utils import import_string
@@ -8,6 +9,7 @@ from instance.config import TestingConfig, DevelopmentConfig, ProductionConfig
 # Create a SQLAlchemy database instance
 db = SQLAlchemy()
 migrate = Migrate()
+jwt = JWTManager()
 
 
 def create_app(config_name='development'):
@@ -30,5 +32,8 @@ def create_app(config_name='development'):
     for blueprint_name in app.config['BLUEPRINTS']:
         blueprint = import_string(f'app.routes.{blueprint_name}:{blueprint_name}_bp')
         app.register_blueprint(blueprint, url_prefix=("/api/" + blueprint_name))
+
+    # Initialize JWT
+    jwt.init_app(app)
 
     return app

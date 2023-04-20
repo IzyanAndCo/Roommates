@@ -73,7 +73,8 @@ def create_user():
         return jsonify(errors), 400
 
     # Creating new row in User table in the database
-    new_user = User(username=data['username'], email=data['email'], password=data['password'])
+    new_user = User(username=data['username'], email=data['email'])
+    new_user.set_password(data['password'])
     db.session.add(new_user)
     try:
         db.session.commit()
@@ -145,7 +146,7 @@ def update_user(user_id):
     # Update the user
     user.username = data['username']
     user.email = data['email']
-    user.password = data['password']
+    user.set_password(data['password'])
 
     # Commit the changes to the database
     try:
@@ -196,7 +197,7 @@ def patch_user(user_id):
     if 'email' in data:
         user.email = data['email']
     if 'password' in data:
-        user.password = data['password']
+        user.set_password(data['password'])
 
     # Commit the changes to the database
     try:

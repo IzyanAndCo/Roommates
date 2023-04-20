@@ -1,3 +1,4 @@
+import bcrypt
 from sqlalchemy import UniqueConstraint
 
 from . import db
@@ -9,6 +10,14 @@ class User(db.Model):
     email = db.Column(db.String(120), unique=True, nullable=False)
     password = db.Column(db.String(256), nullable=False)
     guests = db.relationship('Guest', backref='inviter', lazy=True)
+
+    def set_password(self, password):
+        """Hashes the password using bcrypt before storing in database."""
+        self.password = bcrypt.hashpw(password.encode('utf-8'), bcrypt.gensalt())
+
+    def check_password(self, password):
+        """Checks whether the provided password matches the stored hashed password."""
+        return bcrypt.checkpw(password.encode('utf-8'), self.password)
 
     def to_dict(self):
         return {

@@ -9,7 +9,10 @@ class Config:
     SQLALCHEMY_DATABASE_URI = 'sqlite:///' + os.path.join(basedir, 'app.db')
     SQLALCHEMY_TRACK_MODIFICATIONS = False
     SECRET_KEY = 'mysecretkey'
-    BLUEPRINTS = ['guests', 'users', 'guest_types']
+    BLUEPRINTS = ['guests', 'users', 'guest_types', 'authentication']
+    JWT_SECRET_KEY = 'super-secret-key'
+    JWT_ACCESS_TOKEN_EXPIRES = 3600  # 1 hour
+    JWT_REFRESH_TOKEN_EXPIRES = 604800  # 1 week
 
 
 class ProductionConfig(Config):
