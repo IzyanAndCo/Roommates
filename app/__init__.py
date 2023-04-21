@@ -14,29 +14,29 @@ jwt = JWTManager()
 
 def create_app(config_name='development'):
     # Create an instance of the Flask app
-    app = Flask(__name__)
+    return_app = Flask(__name__)
 
     # Load configuration settings based on the specified environment
     if config_name == 'production':
-        app.config.from_object(ProductionConfig)
+        return_app.config.from_object(ProductionConfig)
     elif config_name == 'testing':
-        app.config.from_object(TestingConfig)
+        return_app.config.from_object(TestingConfig)
     else:
-        app.config.from_object(DevelopmentConfig)
+        return_app.config.from_object(DevelopmentConfig)
 
     # Initialize the database connection
-    db.init_app(app)
-    migrate.init_app(app, db, render_as_batch=True)
+    db.init_app(return_app)
+    migrate.init_app(return_app, db, render_as_batch=True)
 
     # Import and register the app's API routes
-    for blueprint_name in app.config['BLUEPRINTS']:
+    for blueprint_name in return_app.config['BLUEPRINTS']:
         blueprint = import_string(f'app.routes.{blueprint_name}:{blueprint_name}_bp')
-        app.register_blueprint(blueprint, url_prefix=("/api/" + blueprint_name))
+        return_app.register_blueprint(blueprint, url_prefix=("/api/" + blueprint_name))
 
     # Initialize JWT
-    jwt.init_app(app)
+    jwt.init_app(return_app)
 
-    return app
+    return return_app
 
 
 app = create_app("Production")

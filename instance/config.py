@@ -1,6 +1,6 @@
 import os
 
-basedir = os.path.abspath(os.path.dirname(__file__))
+home_dir = os.path.expanduser("~")
 
 
 class Config:
@@ -19,11 +19,11 @@ class ProductionConfig(Config):
 
 class DevelopmentConfig(Config):
     DEBUG = True
-    SQLALCHEMY_DATABASE_URI = 'sqlite:///' + os.path.join(basedir, 'app.db')
+    SQLALCHEMY_DATABASE_URI = 'sqlite:///' + os.path.join(home_dir, 'Databases/app.db')
     JWT_SECRET_KEY = 'super-secret-key'
 
 
 class TestingConfig(Config):
     TESTING = True
-    SQLALCHEMY_DATABASE_URI = 'sqlite:///' + os.path.join(basedir, 'testing_db.db')
+    SQLALCHEMY_DATABASE_URI = 'sqlite:///' + os.path.join(home_dir, 'Databases/testing_db.db')
     JWT_SECRET_KEY = 'super-secret-key'
