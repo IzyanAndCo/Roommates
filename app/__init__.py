@@ -39,4 +39,4 @@ def create_app(config_name='development'):
     return return_app
 
 
-app = create_app("Production")
+app = create_app('production')
