@@ -37,3 +37,6 @@ def create_app(config_name='development'):
     jwt.init_app(app)
 
     return app
+
+
+app = create_app("Production")
