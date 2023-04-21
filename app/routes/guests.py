@@ -1,6 +1,7 @@
 from datetime import datetime, time
 
 from flask import Blueprint, jsonify, request
+from flask_jwt_extended import jwt_required
 
 from app import db
 from app.models import Guest
@@ -12,6 +13,7 @@ guest_schema = GuestSchema()
 
 @guests_bp.route('/', methods=['GET'])
 @guests_bp.route('', methods=['GET'])
+@jwt_required()
 def get_guests():
     """
     API endpoint for getting a list of guests
@@ -76,6 +78,7 @@ def get_guests():
 
 @guests_bp.route('/', methods=['POST'])
 @guests_bp.route('', methods=['POST'])
+@jwt_required()
 def create_guest():
     """
     API endpoint for creating a new guest
@@ -115,6 +118,7 @@ def create_guest():
 
 
 @guests_bp.route('/<int:guest_id>', methods=['GET'])
+@jwt_required()
 def get_guest(guest_id):
     """
     API endpoint for getting information of a specific guest
@@ -137,6 +141,7 @@ def get_guest(guest_id):
 
 
 @guests_bp.route('/<int:guest_id>', methods=['PUT'])
+@jwt_required()
 def update_guest(guest_id):
     """
     API endpoint to update the guest with the requested ID
@@ -185,6 +190,7 @@ def update_guest(guest_id):
 
 
 @guests_bp.route('/<int:guest_id>', methods=['PATCH'])
+@jwt_required()
 def patch_guest(guest_id):
     """
        API endpoint to partial update the guest with the requested ID
@@ -236,6 +242,7 @@ def patch_guest(guest_id):
 
 
 @guests_bp.route('/<int:guest_id>', methods=['DELETE'])
+@jwt_required()
 def delete_guest(guest_id):
     """
     API endpoint to delete the guest with the requested id

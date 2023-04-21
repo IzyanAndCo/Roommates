@@ -1,4 +1,5 @@
 from flask import Blueprint, jsonify, request
+from flask_jwt_extended import jwt_required
 from sqlalchemy.exc import IntegrityError
 
 from app import db
@@ -11,6 +12,7 @@ user_schema = UserSchema()
 
 @users_bp.route('/', methods=['GET'])
 @users_bp.route('', methods=['GET'])
+@jwt_required()
 def get_users():
     """
     API endpoint for getting a list of users
@@ -51,6 +53,7 @@ def get_users():
 
 @users_bp.route('/', methods=['POST'])
 @users_bp.route('', methods=['POST'])
+@jwt_required()
 def create_user():
     """
     API endpoint for creating a new user
@@ -91,6 +94,7 @@ def create_user():
 
 
 @users_bp.route('/<int:user_id>', methods=['GET'])
+@jwt_required()
 def get_user(user_id):
     """
     API endpoint for getting information of a specific user
@@ -113,6 +117,7 @@ def get_user(user_id):
 
 
 @users_bp.route('/<int:user_id>', methods=['PUT'])
+@jwt_required()
 def update_user(user_id):
     """
     API endpoint to update the user with the requested ID
@@ -163,6 +168,7 @@ def update_user(user_id):
 
 
 @users_bp.route('/<int:user_id>', methods=['PATCH'])
+@jwt_required()
 def patch_user(user_id):
     """
        API endpoint to partial update the user with the requested ID
@@ -213,6 +219,7 @@ def patch_user(user_id):
 
 
 @users_bp.route('/<int:user_id>', methods=['DELETE'])
+@jwt_required()
 def delete_user(user_id):
     """
     API endpoint to delete the user with the requested id

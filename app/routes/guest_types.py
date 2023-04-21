@@ -1,4 +1,5 @@
 from flask import Blueprint, request, jsonify
+from flask_jwt_extended import jwt_required
 from sqlalchemy.exc import IntegrityError
 
 from app import db
@@ -11,6 +12,7 @@ guest_type_schema = GuestTypeSchema()
 
 @guest_types_bp.route('/', methods=['GET'])
 @guest_types_bp.route('', methods=['GET'])
+@jwt_required()
 def get_guest_types():
     """
     API endpoint for getting a list of guest types
@@ -53,6 +55,7 @@ def get_guest_types():
 
 @guest_types_bp.route('/', methods=['POST'])
 @guest_types_bp.route('', methods=['POST'])
+@jwt_required()
 def create_guest_type():
     """
     API endpoint for creating a new guest type
@@ -86,6 +89,7 @@ def create_guest_type():
 
 
 @guest_types_bp.route('/<int:guest_id>', methods=['GET'])
+@jwt_required()
 def get_guest_type(guest_id):
     """
     API endpoint for getting information of a specific guest type
@@ -108,6 +112,7 @@ def get_guest_type(guest_id):
 
 
 @guest_types_bp.route("/<int:guest_type_id>", methods=['PUT'])
+@jwt_required()
 def update_guest_type(guest_type_id):
     """
     API endpoint to update the guest type with the requested ID
@@ -150,6 +155,7 @@ def update_guest_type(guest_type_id):
 
 
 @guest_types_bp.route("/<int:guest_type_id>", methods=['DELETE'])
+@jwt_required()
 def delete_guest_type(guest_type_id):
     """
        API endpoint to delete the guest type with the requested id
