@@ -1,7 +1,7 @@
 from datetime import datetime, time
 
 from flask import Blueprint, jsonify, request
-from flask_jwt_extended import jwt_required
+from flask_jwt_extended import jwt_required, get_jwt_identity
 
 from app import db
 from app.models import Guest
@@ -99,6 +99,7 @@ def create_guest():
     """
     # Getting data from request and validate it
     data = request.get_json()
+    data['inviter_id'] = get_jwt_identity()
     errors = guest_schema.validate(data)
     if errors:
         return jsonify(errors), 400
@@ -171,6 +172,11 @@ def update_guest(guest_id):
         # If guest doesn't exist return 404 response
         return jsonify({'error': 'Guest not found'}), 404
 
+    # Check if user tries to edit his guest
+    current_user_id = get_jwt_identity()
+    if current_user_id != guest.inviter_id:
+        return jsonify({'error': 'Access denied'}), 403
+
     # Getting data from request and validate it
     data = request.get_json()
     errors = guest_schema.validate(data, existing_guest_id=guest_id)
@@ -212,6 +218,11 @@ def delete_guest(guest_id):
     if not guest:
         # If guest doesn't exist return 404 status code
         return jsonify({'error': 'Guest not found'}), 404
+
+    # Check if user tries to edit his guest
+    current_user_id = get_jwt_identity()
+    if current_user_id != guest.inviter_id:
+        return jsonify({'error': 'Access denied'}), 403
 
     # Delete guest from database
     db.session.delete(guest)

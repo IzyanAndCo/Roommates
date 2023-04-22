@@ -1,9 +1,7 @@
 from datetime import datetime, timedelta
-from typing import Optional, Union
 
-from flask import typing
 from marshmallow import Schema, fields, validate, validates_schema, ValidationError, types
-from sqlalchemy import and_, or_, null
+from sqlalchemy import and_, or_
 
 from app import db
 from app.models import Guest
@@ -17,18 +15,7 @@ class GuestSchema(Schema):
     stay_time = fields.Time(required=True)
     comment = fields.Str(required=False, validate=validate.Length(min=0, max=256))
 
-    def __init__(
-            self,
-            *,
-            only: Optional[types.StrSequenceOrSet] = None,
-            exclude: types.StrSequenceOrSet = (),
-            many: bool = False,
-            context: Optional[dict] = None,
-            load_only: types.StrSequenceOrSet = (),
-            dump_only: types.StrSequenceOrSet = (),
-            partial: Union[bool, types.StrSequenceOrSet] = False,
-            unknown: Optional[str] = None,
-    ):
+    def __init__(self):
         super().__init__()
         self.existing_guest_id = None
 

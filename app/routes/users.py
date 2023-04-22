@@ -1,5 +1,5 @@
 from flask import Blueprint, jsonify, request
-from flask_jwt_extended import jwt_required
+from flask_jwt_extended import jwt_required, get_jwt_identity
 from sqlalchemy.exc import IntegrityError
 
 from app import db
@@ -135,6 +135,11 @@ def update_user(user_id):
     :rtype: dict
     :raises IntegrityError: If the user with such email or username already exists
     """
+    # Check if user tries to edit himself
+    current_user_id = get_jwt_identity()
+    if current_user_id != user_id:
+        return jsonify({'error': 'Access denied'}), 403
+
     # Retrieve user with the specified id from the database
     user = db.session.get(User, {'id': user_id})
 
@@ -186,6 +191,11 @@ def patch_user(user_id):
        :rtype: dict
        :raises IntegrityError: If the user with this email or username already exists
     """
+    # Check if user tries to edit himself
+    current_user_id = get_jwt_identity()
+    if current_user_id != user_id:
+        return jsonify({'error': 'Access denied'}), 403
+
     user = db.session.get(User, {'id': user_id})
     if not user:
         # If user doesn't exist return 404 response
@@ -230,6 +240,11 @@ def delete_user(user_id):
     :return: A JSON containing error message if it is and status code
     :rtype: dict
     """
+    # Check if user tries to delete himself
+    current_user_id = get_jwt_identity()
+    if current_user_id != user_id:
+        return jsonify({'error': 'Access denied'}), 403
+
     user = db.session.get(User, {"id": user_id})
 
     if not user:
