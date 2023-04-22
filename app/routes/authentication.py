@@ -32,7 +32,7 @@ def login() -> tuple[Response, int]:
         refresh_token = create_refresh_token(identity=user.id)
 
         # Return tokens in response
-        return jsonify({'access_token': access_token, 'refresh_token': refresh_token}), 200
+        return jsonify({'access_token': access_token, 'refresh_token': refresh_token, 'user_id': user.id}), 200
     else:
         return jsonify({'error': 'Invalid username or password'}), 401
 
