@@ -1,3 +1,5 @@
+from datetime import datetime, timedelta
+
 import bcrypt
 from sqlalchemy import UniqueConstraint
 
@@ -66,8 +68,16 @@ class Guest(db.Model):
     inviter_id = db.Column(db.Integer, db.ForeignKey('user.id'), nullable=False)
     coming_date = db.Column(db.Date, nullable=False)
     coming_time = db.Column(db.Time, nullable=False)
-    stay_time = db.Column(db.Time, nullable=False)
+    exit_time = db.Column(db.Time, nullable=False)
     comment = db.Column(db.String(255))
+
+    def set_exit_time(self, coming_date, coming_time, stay_time):
+        coming_time = datetime.combine(coming_date, coming_time)
+        stay_duration = timedelta(hours=stay_time.hour,
+                                  minutes=stay_time.minute,
+                                  seconds=stay_time.second)
+        exit_time = coming_time + stay_duration
+        self.exit_time = exit_time.time()
 
     def to_dict(self):
         """
@@ -75,12 +85,15 @@ class Guest(db.Model):
             :return: Dict with table data
             :rtype: dict
         """
+        coming_datetime = datetime.combine(self.coming_date, self.coming_time)
+        exit_datetime = datetime.combine(self.coming_date, self.exit_time)
+        stay_time = exit_datetime - coming_datetime
         return {
             'id': self.id,
             'guest_type_id': self.guest_type_id,
             'inviter_id': self.inviter_id,
             'coming_date': self.coming_date.strftime('%Y-%m-%d'),
             'coming_time': self.coming_time.strftime('%H:%M:%S'),
-            'stay_time': self.stay_time.strftime('%H:%M:%S'),
+            'stay_time': str(stay_time),
             'comment': self.comment
         }

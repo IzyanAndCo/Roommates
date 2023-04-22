@@ -104,12 +104,15 @@ def create_guest():
         return jsonify(errors), 400
 
     # Creating new row in Guest table in the database
+    coming_date = datetime.strptime(data['coming_date'], '%Y-%m-%d').date()
+    coming_time = time.fromisoformat(data['coming_time'])
+    stay_time = time.fromisoformat(data['stay_time'])
     new_guest = Guest(guest_type_id=data['guest_type_id'],
                       inviter_id=data['inviter_id'],
-                      coming_date=datetime.strptime(data['coming_date'], '%Y-%m-%d').date(),
-                      coming_time=time.fromisoformat(data['coming_time']),
-                      stay_time=time.fromisoformat(data['stay_time']),
+                      coming_date=coming_date,
+                      coming_time=coming_time,
                       comment=data['comment'])
+    new_guest.set_exit_time(coming_date, coming_time, stay_time)
     db.session.add(new_guest)
     db.session.commit()
 
@@ -170,74 +173,25 @@ def update_guest(guest_id):
 
     # Getting data from request and validate it
     data = request.get_json()
-    errors = guest_schema.validate(data)
+    errors = guest_schema.validate(data, existing_guest_id=guest_id)
     if errors:
         return jsonify(errors), 400
 
     # Update the guest
+    coming_date = datetime.strptime(data['coming_date'], '%Y-%m-%d').date()
+    coming_time = time.fromisoformat(data['coming_time'])
+    stay_time = time.fromisoformat(data['stay_time'])
     guest.guest_type_id = data['guest_type_id']
     guest.inviter_id = data['inviter_id']
     guest.coming_date = datetime.strptime(data['coming_date'], '%Y-%m-%d').date()
     guest.coming_time = time.fromisoformat(data['coming_time'])
-    guest.stay_time = time.fromisoformat(data['stay_time'])
+    guest.set_exit_time(coming_date=coming_date, coming_time=coming_time,stay_time=stay_time)
     guest.comment = data['comment']
 
     # Commit the changes to the database
     db.session.commit()
 
     # Serialize the object and return it
-    return jsonify(guest.to_dict())
-
-
-@guests_bp.route('/<int:guest_id>', methods=['PATCH'])
-@jwt_required()
-def patch_guest(guest_id):
-    """
-       API endpoint to partial update the guest with the requested ID
-
-       PATCH /api/guests/<guest_id>
-
-       Request Body Parameters:
-        1. guest_type_id (int): The unique ID for guest type
-        2. inviter_id (int): The unique ID for guest type
-        3. coming_date (str): Coming date of the guest
-        4. coming_time (str): Coming time of the guest
-        5. stay_time (str): Staying time of the guest
-        6. comment (str): Comment for guest
-
-       :param guest_id: The unique ID of the guest to update
-       :type guest_id: int
-       :return: A JSON object containing data of the updated guest
-       :rtype: dict
-    """
-    guest = db.session.get(Guest, {'id': guest_id})
-    if not guest:
-        # If guest doesn't exist return 404 response
-        return jsonify({'error': 'guest not found'}), 404
-
-    # Getting data from the request and validate it
-    data = request.get_json()
-    errors = guest_schema.validate(data, partial=True)
-    if errors:
-        return jsonify(errors), 400
-
-    # Update the guest with the provided data
-    if 'guest_type_id' in data:
-        guest.guest_type_id = data['guest_type_id']
-    if 'inviter_id' in data:
-        guest.inviter_id = data['inviter_id']
-    if 'coming_date' in data:
-        guest.coming_date = datetime.strptime(data['coming_date'], '%Y-%m-%d').date()
-    if 'coming_time' in data:
-        guest.coming_time = time.fromisoformat(data['coming_time'])
-    if 'stay_time' in data:
-        guest.stay_time = time.fromisoformat(data['stay_time'])
-    if 'comment' in data:
-        guest.comment = data['comment']
-
-    # Commit the changes to the database
-    db.session.commit()
-
     return jsonify(guest.to_dict())
 
 
